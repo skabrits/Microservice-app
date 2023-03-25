@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+<style>
+.red-button{
+	background-color: #ff0000
+}
+</style>
+
+<title>Form for registration</title>
+<meta charset="UTF-8"></meta>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+
+<body>
+	<h1>Registration form</h1>
+	<p>Fill in reg data</p>
+
+	<form onsubmit="return false">
+		<label>e-mail</label><br>
+		<input type="email" id="form_email"></input><br><br>
+		<label>password</label><br>
+		<input type="password" id="form_pass"></input><br><br>
+		<button class="red-button" id="the_button">Submit</button>
+	</form>
+
+	<details>
+		<summary>See registration data</summary>
+		<table>
+			<tr>
+			  <th>Name field</th>
+			  <th>Value field</th>
+			</tr>
+			<tr>
+			  <td>Email</td>
+			  <td id="table_email">-</td>
+			</tr>
+			<tr>
+			  <td>Password</td>
+			  <td id="table_pass">-</td>
+			</tr>
+			<tr>
+			  <td>ID</td>
+			  <td id="table_id">-</td>
+			</tr>
+		</table>
+	</details>
+
+</body>
+
+<script>
+	$(document).ready(function(){
+		$("#the_button").click(function(){
+			var email = $("#form_email").val();
+			var pass = $("#form_pass").val();
+			$.ajax("http://127.0.0.1:8000/api/registr", {
+				type: "POST",
+				data: { login: email, password: pass }
+			}).done(function(data){
+                        data = JSON.parse(data);
+				if (data.status == 200){
+					$("#table_email").text(email);
+					$("#table_pass").text(pass);
+					$("#table_id").text(data.ID);
+					alert("status: " + data.status);
+				} else {
+					alert("status: " + data.status);
+				}
+			}).fail(function(jqXhr, statuscode, errorMSG){
+				alert("error: " + errorMSG);
+			});
+		});
+	});
+</script>
