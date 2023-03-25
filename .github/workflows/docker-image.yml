@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: docker login
+      env:
+        USER: ${{secrets.DOCKER_USER}}
+        PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: docker login -u $USER -p $PASSWORD
+    - name: Build the Docker image and push
+      run: find -iname "Dockerfile" -exec bash -c 'cd $(dirname $@) && docker build . --file $(basename $@) -t ${{secrets.DOCKER_USER}}/$(echo "$@" | awk -F"/" "{print \$(NF - 2)\"-\"\$(NF - 4)}"):$(cat tag) -t ${{secrets.DOCKER_USER}}/$(echo "$@" | awk -F"/" "{print \$(NF - 2)\"-\"\$(NF - 4)}"):latest && docker push ${{secrets.DOCKER_USER}}/$(echo "$@" | awk -F"/" "{print \$(NF - 2)\"-\"\$(NF - 4)}") -a' bash {} \;
