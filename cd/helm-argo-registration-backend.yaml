@@ -15,7 +15,7 @@ spec:
       allowEmpty: true
   project: default
   source:
-    chart: "backend/src/registration/helm/registration-backend"
+    path: "backend/src/registration/helm/registration-backend"
     repoURL: https://github.com/skabrits/Microservice-app.git
     targetRevision: "main"
     helm:
