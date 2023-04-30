@@ -5,4 +5,4 @@ app = Flask(__name__)
 
 CORS(app)
 
-from registration.API import views
+from registrationAPI import views

@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request
-from registration.Logic import user
+from registrationLogic import user
 import json
 
 @app.route("/")
