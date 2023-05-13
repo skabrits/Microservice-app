@@ -9,6 +9,7 @@
 <title>Form for registration</title>
 <meta charset="UTF-8"></meta>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src='/app/config.js'></script>
 </head>
 
 <body>
@@ -52,7 +53,7 @@
 		$("#the_button").click(function(){
 			var email = $("#form_email").val();
 			var pass = $("#form_pass").val();
-			$.ajax("http://127.0.0.1:8000/api/registr", {
+			$.ajax(app.endpoint, {
 				type: "POST",
 				data: { login: email, password: pass }
 			}).done(function(data){
