@@ -2,7 +2,7 @@ from flask import Flask
 from flask import request
 from registrationLogic import user
 import json
-from __main__ import app
+from app import app
 
 @app.route("/")
 def index():
