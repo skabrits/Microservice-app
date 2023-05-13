@@ -1,8 +1,8 @@
 from flask import Flask
 from flask import request
 from registrationLogic import user
+from registrationAPI import app
 import json
-from app import app
 
 @app.route("/")
 def index():
