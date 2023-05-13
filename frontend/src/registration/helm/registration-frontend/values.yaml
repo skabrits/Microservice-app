@@ -12,7 +12,10 @@ image:
 
 imagePullSecrets: []
 
-port: 8000
+app:
+  endpoint: http://192.168.56.15/registration/api/registr
+
+port: 80
 
 service:
   type: ClusterIP

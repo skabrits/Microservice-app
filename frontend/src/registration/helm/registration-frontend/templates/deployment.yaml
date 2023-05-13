@@ -30,3 +30,10 @@ spec:
             - name: http
               containerPort: {{ .Values.port }}
               protocol: TCP
+          volumeMounts:
+          - name: config-volume
+            mountPath: /app
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ include "registration-backend.fullname" . }}-configmap
