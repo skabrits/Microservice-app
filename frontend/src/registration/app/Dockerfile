@@ -1,9 +1,9 @@
-FROM python:3.7.2
+FROM nginx
 
 WORKDIR /app
 
-COPY . .
+COPY ./index.html /usr/share/nginx/html/index.html
 
-EXPOSE 8000
+EXPOSE 80
 
-CMD ["python","-m","http.server","8000"]
+CMD ["/bin/bash","-c","nginx -g \"daemon off;\""]
