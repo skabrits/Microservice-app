@@ -4,4 +4,4 @@ metadata:
   name: {{ include "registration-backend.fullname" . }}-configmap
 data:
   config.js: |
-    app.endpoint = {{ .Values.app.endpoint }}
+    var app = {"endpoint": "{{ .Values.app.endpoint }}"};
