@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
 from registrationLogic import user
-from registrationAPI import app
+from app import app
 import json
 
 @app.route("/")
