@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: longhorn
+  name: frontend
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -15,11 +15,11 @@ spec:
       allowEmpty: true
   project: default
   source:
-    chart: longhorn
-    repoURL: https://charts.longhorn.io
-    targetRevision: "*"
+    path: "frontend/src/registration/helm/registration-frontend"
+    repoURL: https://github.com/skabrits/Microservice-app.git
+    targetRevision: "main"
     helm:
-      releaseName: longhorn
+      releaseName: frontend
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: longhorn-system
+    namespace: "dev"
