@@ -32,7 +32,7 @@ spec:
               protocol: TCP
           volumeMounts:
           - name: config-volume
-            mountPath: /app
+            mountPath: /usr/share/nginx/html/js
       volumes:
       - name: config-volume
         configMap:
