@@ -30,3 +30,9 @@ spec:
             - name: http
               containerPort: {{ .Values.port }}
               protocol: TCP
+          env:
+          - name: "DB_URL"
+            valueFrom:
+              secretKeyRef:
+                key: db_conection_string
+                name: {{ include "registration-backend.fullname" . }}-db-password
