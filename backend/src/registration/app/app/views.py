@@ -17,7 +17,7 @@ def posted():
         print("registr attempt")
         username = request.form["login"]
         password = request.form["password"]
-        user_id = register(username, password)
+        user_id = user.register(username, password)
         response = {"status": 200, "ID": user_id}
         
     return json.dumps(response)
