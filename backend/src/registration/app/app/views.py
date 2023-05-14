@@ -47,7 +47,7 @@ def login_view():
     return json.dumps(response)
     
     
-@app.route("/api/file/upload", methods=['POST'])
+@app.route("/api/file/upload", methods=['GET','POST'])
 def upload_view():
     response = {"status": 400}
     if request.method == 'POST':
@@ -72,7 +72,7 @@ def upload_view():
         
     return json.dumps(response)
     
-@app.route("/api/file/delete", methods=['POST'])
+@app.route("/api/file/delete", methods=['GET','POST'])
 def delete_view():
     response = {"status": 400}
     if request.method == 'POST':
@@ -93,7 +93,7 @@ def delete_view():
         
     return json.dumps(response)
     
-@app.route("/api/file/list", methods=['POST'])
+@app.route("/api/file/list", methods=['GET','POST'])
 def list_view():
     response = {"status": 400}
     if request.method == 'POST':
