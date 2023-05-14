@@ -15,6 +15,14 @@ def login(login, password):
     if user["password"] == password:
         user_id = user["_id"]
     return user_id
+    
+def check_user(user_id):
+    result = True
+    users_table = connect_to_mongodb("users")
+    user = users_table.find_one({"_id" : user_id})
+    if user is None:
+        result = False
+    return result
 
 def generate_id(login, password):
     random.seed(str(login+password))
