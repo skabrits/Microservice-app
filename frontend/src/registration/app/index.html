@@ -113,13 +113,13 @@
 			});
 		});
 		
-		function login_update(var email, var pass, var data) {
+		function login_update(email, pass, data) {
 			$("#table_email").text(email);
 			$("#table_pass").text(pass);
 			$("#table_id").text(data.ID);
 			$(".form_user_id").val(data.ID);
 		}
-		function list_files(var data) {
+		function list_files(data) {
 			$.ajax(app.endpoint+"/api/file/list", {
 				type: "POST",
 				data: { user_id: data.ID }
