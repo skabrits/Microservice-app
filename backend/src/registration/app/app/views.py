@@ -52,7 +52,7 @@ def upload_view():
     response = {"status": 400}
     if request.method == 'POST':
         user_id = request.form["user_id"]
-        if check_user(user_id):
+        if user.check_user(user_id):
             if 'file' not in request.files:
                 response = {"status": 400}
             file = request.files['file']
@@ -77,7 +77,7 @@ def delete_view():
     response = {"status": 400}
     if request.method == 'POST':
         user_id = request.form["user_id"]
-        if check_user(user_id):
+        if user.check_user(user_id):
             file_name = request.form["file_name"]
             try:
                 file_path = get_file_path(user_id, file_name)
@@ -98,7 +98,7 @@ def list_view():
     response = {"status": 400}
     if request.method == 'POST':
         user_id = request.form["user_id"]
-        if check_user(user_id):
+        if user.check_user(user_id):
             user_files_list = user_files.list_files(user_id)
             response = {"status": 200, "files": user_files_list}
         else:
