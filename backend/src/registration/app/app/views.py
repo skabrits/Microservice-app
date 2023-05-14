@@ -59,7 +59,7 @@ def upload_view():
         if file.filename == '':
             response = {"status": 400}
         if file:
-            file_name = secure_file_name(file.filename)
+            file_name = secure_filename(file.filename)
             file_name = file_name
             folderpath = os.path.join(app.config['UPLOAD_FOLDER'], str(user_id))
             os.makedirs(folderpath, exist_ok = True)
