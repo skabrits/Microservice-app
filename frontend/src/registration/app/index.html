@@ -31,7 +31,7 @@
 	<p>Upload file:</p>
 	
 	<form id="upload_file_form" enctype="multipart/form-data" method="POST">
-		<input type="text" id="form_user_id" name="user_id" />
+		<input type="hidden" id="form_user_id" name="user_id" />
 		<input type="file" id="form_file" name="file"><br><br>
 		<input type="submit" value="submit" />
     </form><br>
@@ -40,10 +40,10 @@
 	
 	<form id="file_form" enctype="multipart/form-data" method="POST">
 		<input type="hidden" class="form_user_id" name="user_id" />
-		<label>delete</label><br>
-		<input type="radio" name="action" value="delete"><br><br>
-		<label>download</label><br>
-		<input type="radio" name="action" value="download"><br><br>
+		
+		<input type="radio" name="action" value="delete"><label>delete</label><br><br>
+		
+		<input type="radio" name="action" value="download"><label>download</label><br><br>
 		<label>files:</label><br>
 		<div id="radio_group" ></div>
 		<input type="submit" value="submit" />
@@ -132,7 +132,7 @@
 				if (data.status == 200){
 					for(var i=0; i<data.files.length; i++){
 						var file_name = data.files[i];
-						$("#radio_group").append("<label>" + file_name + "</label><br><input type=\"radio\" name=\"file_name\" value=\"" + file_name + "\"><br><br>");
+						$("#radio_group").append("<input type=\"radio\" name=\"file_name\" value=\"" + file_name + "\"><label>" + file_name + "</label><br><br>");
 					}
 				} else {
 					alert("status: " + data.status);
