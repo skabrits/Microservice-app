@@ -52,24 +52,24 @@ def login_view():
 def upload_view():
     response = {"status": 400}
     if request.method == 'POST':
-        #user_id = request.form["user_id"]
-        #if user.check_user(1111):#user_id):
-        if 'file' not in request.files:
-            response = {"status": 400}
-        file = request.files['file']
-        if file.filename == '':
-            response = {"status": 400}
-        if file:
-            file_name = secure_filename(file.filename)
-            file_name = file_name
-            folderpath = os.path.join(app.config['UPLOAD_FOLDER'], str(user_id))
-            os.makedirs(folderpath, exist_ok = True)
-            file_path = os.path.join(folderpath, file_name)
-            file.save(file_path)
-            user_files.upload_file(user_id, file_name, file_path)
-            response = {"status": 202}
-        #else:
-        #    response = {"status": 405}
+        user_id = request.form["user_id"]
+        if user.check_user(user_id):
+            if 'file' not in request.files:
+                response = {"status": 400}
+            file = request.files['file']
+            if file.filename == '':
+                response = {"status": 400}
+            if file:
+                file_name = secure_filename(file.filename)
+                file_name = file_name
+                folderpath = os.path.join(app.config['UPLOAD_FOLDER'], str(user_id))
+                os.makedirs(folderpath, exist_ok = True)
+                file_path = os.path.join(folderpath, file_name)
+                file.save(file_path)
+                user_files.upload_file(user_id, file_name, file_path)
+                response = {"status": 202}
+        else:
+            response = {"status": 405}
         
     return json.dumps(response)
     
