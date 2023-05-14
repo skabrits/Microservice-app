@@ -26,15 +26,19 @@
 		<input type="password" id="form_pass"></input><br><br>
 		<button class="red-button" id="registration">Registration</button>
 		<button class="blue-button" id="login">Login</button>
-	</form>
+	</form><br><br>
 	
-	<form id="upload_file_form" enctype="multipart/form-data" method="post" onsubmit="return false">
-		<input type="hidden" class="form_user_id" name="user_id" />
-		<input type="file" id="form_file" name="filename"><br><br>
+	<p>Upload file:</p>
+	
+	<form id="upload_file_form" enctype="multipart/form-data" method="POST">
+		<input type="text" id="form_user_id" name="user_id" />
+		<input type="file" id="form_file" name="file"><br><br>
 		<input type="submit" value="submit" />
-    </form>
+    </form><br>
 	
-	<form id="file_form" enctype="multipart/form-data" method="post" onsubmit="return false">
+	<p>Files:</p>
+	
+	<form id="file_form" enctype="multipart/form-data" method="POST">
 		<input type="hidden" class="form_user_id" name="user_id" />
 		<label>delete</label><br>
 		<input type="radio" name="action" value="delete"><br><br>
@@ -117,7 +121,7 @@
 			$("#table_email").text(email);
 			$("#table_pass").text(pass);
 			$("#table_id").text(data.ID);
-			$(".form_user_id").val(data.ID);
+			$("#form_user_id").val(data.ID);
 		}
 		function list_files(data) {
 			$.ajax(app.endpoint+"/api/file/list", {
