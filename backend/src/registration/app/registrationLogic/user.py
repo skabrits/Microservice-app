@@ -11,17 +11,9 @@ def register(login, password):
     
 def login(login, password):
     users_table = connect_to_mongodb("users")
-    try:
-        user = users_table.find_one({"login" : login})
-        if user["password"] == password:
-            user_id = user["_id"]
-    except KeyError as e:
-        print("ERROR: %s" % (e,))
-        user_id = None
-    except Exception as e:
-        print("ERROR: %s" % (e,))
-        user_id = None
-        
+    user = users_table.find_one({"login" : login})
+    if user["password"] == password:
+        user_id = user["_id"]
     return user_id
 
 def generate_id(login, password):

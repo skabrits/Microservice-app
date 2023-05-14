@@ -14,15 +14,15 @@ def index():
 def registr_view():
     response = {"status": 400}
     if request.method == 'POST':
-        print("registr attempt")
+        app.logger.info("registr attempt")
         username = request.form["login"]
         password = request.form["password"]
         try:
             user_id = user.register(username, password)
             response = {"status": 200, "ID": user_id}
         except Exception as e:
-            print("ERROR: %s" % (e,))
-            response = {"status": 401}
+            app.logger.error("ERROR: %s" % (e,))
+            response = {"status": 404}
         
     return json.dumps(response)
     
@@ -30,13 +30,17 @@ def registr_view():
 def login_view():
     response = {"status": 400}
     if request.method == 'POST':
-        print("login attempt")
+        app.logger.info("login attempt")
         username = request.form["login"]
         password = request.form["password"]
-        user_id = user.login(username, password)
-        if user_id is None:
-            response = {"status": 401}
-        else:
+        try:
+            user_id = user.login(username, password)
             response = {"status": 200, "ID": user_id}
+        except KeyError as e:
+            app.logger.error("ERROR: %s" % (e,))
+            response = {"status": 405}
+        except Exception as e:
+            app.logger.error("ERROR: %s" % (e,))
+            response = {"status": 404}
         
     return json.dumps(response)
