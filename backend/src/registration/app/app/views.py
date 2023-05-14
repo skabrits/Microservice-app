@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from registrationLogic import user, user_files
 from app import app
+from werkzeug.utils import secure_filename
 import random
 import json
 import os
