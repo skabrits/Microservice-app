@@ -13,7 +13,11 @@ image:
 imagePullSecrets: []
 
 app:
-  db-password: "bW9uZ29kYjovL3Jvb3Q6UFU4WU5QOUZCN0Btb25nb2RiLmRiLXN5c3RlbS5zdmMuY2x1c3Rlci5sb2NhbDoyNzAxNw=="
+  db-password: bW9uZ29kYjovL3Jvb3Q6UFU4WU5QOUZCN0Btb25nb2RiLmRiLXN5c3RlbS5zdmMuY2x1c3Rlci5sb2NhbDoyNzAxNw==
+  persistance:
+    storageClass: longhorn
+    size: 8Gi
+    mode: ReadWriteMany
 
 port: 8000
 

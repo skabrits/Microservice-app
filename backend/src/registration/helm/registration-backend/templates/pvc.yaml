@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "registration-backend.fullname" . }}-pvc
+spec:
+  accessModes:
+    - {{ .Values.app.persistance.mode }}
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: {{ .Values.app.persistance.size }}
+  storageClassName: {{ .Values.app.persistance.storageClass }}

@@ -36,3 +36,10 @@ spec:
               secretKeyRef:
                 key: db_conection_string
                 name: {{ include "registration-backend.fullname" . }}-db-password
+          volumeMounts:
+          - mountPath: "/app/files"
+            name: file-storage
+      volumes:
+      - name: file-storage
+        persistentVolumeClaim:
+          claimName: {{ include "registration-backend.fullname" . }}-pvc
