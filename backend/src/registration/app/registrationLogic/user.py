@@ -8,6 +8,21 @@ def register(login, password):
     users_table = connect_to_mongodb("users")
     users_table.insert_one(user)
     return user_id
+    
+def login(login, password):
+    users_table = connect_to_mongodb("users")
+    try:
+        user = users_table.find_one({"login" : login})
+        if user["password"] == password:
+            user_id = user["_id"]
+    except KeyError as e:
+        print("ERROR: %s" % (e,))
+        user_id = None
+    except Exception as e:
+        print("ERROR: %s" % (e,))
+        user_id = None
+        
+    return user_id
 
 def generate_id(login, password):
     random.seed(str(login+password))

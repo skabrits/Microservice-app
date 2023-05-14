@@ -4,6 +4,9 @@
 .red-button{
 	background-color: #ff0000
 }
+.blue-button{
+	background-color: #0000ff
+}
 </style>
 
 <title>Form for registration</title>
@@ -21,7 +24,8 @@
 		<input type="email" id="form_email"></input><br><br>
 		<label>password</label><br>
 		<input type="password" id="form_pass"></input><br><br>
-		<button class="red-button" id="the_button">Submit</button>
+		<button class="red-button" id="registration">Registration</button>
+		<button class="blue-button" id="login">Login</button>
 	</form>
 
 	<details>
@@ -50,10 +54,10 @@
 
 <script>
 	$(document).ready(function(){
-		$("#the_button").click(function(){
+		$("#registration").click(function(){
 			var email = $("#form_email").val();
 			var pass = $("#form_pass").val();
-			$.ajax(app.endpoint, {
+			$.ajax(app.endpoint+"/api/registr", {
 				type: "POST",
 				data: { login: email, password: pass }
 			}).done(function(data){
@@ -62,7 +66,28 @@
 					$("#table_email").text(email);
 					$("#table_pass").text(pass);
 					$("#table_id").text(data.ID);
+					alert("status: " + data.status + " user registered");
+				} else {
 					alert("status: " + data.status);
+				}
+			}).fail(function(jqXhr, statuscode, errorMSG){
+				alert("error: " + errorMSG);
+			});
+		});
+		
+		$("#login").click(function(){
+			var email = $("#form_email").val();
+			var pass = $("#form_pass").val();
+			$.ajax(app.endpoint+"/api/login", {
+				type: "POST",
+				data: { login: email, password: pass }
+			}).done(function(data){
+                        data = JSON.parse(data);
+				if (data.status == 200){
+					$("#table_email").text(email);
+					$("#table_pass").text(pass);
+					$("#table_id").text(data.ID);
+					alert("status: " + data.status + " login succeeded");
 				} else {
 					alert("status: " + data.status);
 				}
