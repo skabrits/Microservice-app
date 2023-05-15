@@ -128,7 +128,7 @@ def download_view():
                 file_path = user_files.get_filepath(user_id, file_name)
                 if not os.path.exists(file_path):
                     return json.dumps({"status": 404})
-                return send_from_directory(os.path.dirname(file_name), file_name, as_attachment=True)
+                return send_from_directory(os.path.dirname(file_path), file_name, as_attachment=True)
             except Exception as e:
                 app.logger.error("ERROR: %s" % (e,))
                 response = {"status": 404}
