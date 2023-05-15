@@ -54,16 +54,16 @@ def login_view():
     
 @app.route("/api/file/upload", methods=['GET','POST'])
 def upload_view():
-    response = {"status": 400}
+    status = 400
     if request.method == 'POST':
         app.logger.info("upload attempt")
         user_id = request.form["user_id"]
         if user.check_user(user_id):
             if 'file' not in request.files:
-                response = {"status": 400}
+                status = 400
             file = request.files['file']
             if file.filename == '':
-                response = {"status": 400}
+                status = 400
             if file:
                 file_name = secure_filename(file.filename)
                 file_name = file_name
@@ -72,17 +72,17 @@ def upload_view():
                 file_path = os.path.join(folderpath, file_name)
                 if user_files.upload_file(user_id, file_name, file_path):
                     file.save(file_path)
-                    response = {"status": 202}
+                    status = 202
                 else:
-                    response = {"status": 401}
+                    status = 401
         else:
-            response = {"status": 405}
+            status = 405
         
-    return json.dumps(response)
+    return redirect(request.url+"?status=%s" % (status,))
     
 @app.route("/api/file/delete", methods=['GET','POST'])
 def delete_view():
-    response = {"status": 400}
+    status = 400
     if request.method == 'POST':
         app.logger.info("delete attempt")
         user_id = request.form["user_id"]
@@ -93,14 +93,14 @@ def delete_view():
                 if os.path.exists(file_path):
                     os.remove(file_path)
                 user_files.delete_file(user_id, file_name)
-                response = {"status": 200}
+                status = 200
             except Exception as e:
                 app.logger.error("ERROR: %s" % (e,))
-                response = {"status": 404}
+                status = 404
         else:
-            response = {"status": 405}
+            status = 405
         
-    return json.dumps(response)
+    return redirect(request.url+"?status=%s" % (status,))
     
 @app.route("/api/file/list", methods=['GET','POST'])
 def list_view():
