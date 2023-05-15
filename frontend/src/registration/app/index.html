@@ -7,6 +7,9 @@
 .blue-button{
 	background-color: #0000ff
 }
+.gray-button{
+	background-color: #555555
+}
 </style>
 
 <title>Form for registration</title>
@@ -26,6 +29,7 @@
 		<input type="password" id="form_pass"></input><br><br>
 		<button class="red-button" id="registration">Registration</button>
 		<button class="blue-button" id="login">Login</button>
+		<button class="gray-button" id="logout">Logout</button>
 	</form><br><br>
 	
 	<p>Upload file:</p>
@@ -83,6 +87,13 @@
 		$(".form_user_id").val(user_id);
 		$("#table_id").text(user_id);
 		
+		$.urlParam = function (name) {
+			var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+							  .exec(window.location.search);
+
+			return (results !== null) ? results[1] || 0 : false;
+		}
+		
 		var status = $.urlParam("status");
 		
 		if(status){
@@ -96,7 +107,7 @@
 				type: "POST",
 				data: { login: email, password: pass }
 			}).done(function(data){
-                        data = JSON.parse(data);
+                data = JSON.parse(data);
 				if (data.status == 200){
 					login_update(email, pass, data);
 					alert("status: " + data.status + " user registered");
@@ -115,7 +126,7 @@
 				type: "POST",
 				data: { login: email, password: pass }
 			}).done(function(data){
-                        data = JSON.parse(data);
+                data = JSON.parse(data);
 				if (data.status == 200){
 					login_update(email, pass, data);
 					alert("status: " + data.status + " login succeeded");
@@ -126,6 +137,15 @@
 			}).fail(function(jqXhr, statuscode, errorMSG){
 				alert("error: " + errorMSG);
 			});
+		});
+		
+		$("#logout").click(function(){
+			$("#table_email").text(email);
+			$("#table_pass").text(pass);
+			$("#table_id").text(data.ID);
+			$(".form_user_id").val(data.ID);
+			
+			setCookie("user_id", "", 1);
 		});
 		
 		$("#delete_file").click(function(){
@@ -149,11 +169,11 @@
 				type: "POST",
 				data: { user_id: data.ID }
 			}).done(function(data){
-                        data = JSON.parse(data);
+                data = JSON.parse(data);
 				if (data.status == 200){
+					$("#radio_group").empty();
 					for(var i=0; i<data.files.length; i++){
 						var file_name = data.files[i];
-						$("#radio_group").empty();
 						$("#radio_group").append("<input type=\"radio\" name=\"file_name\" value=\"" + file_name + "\"><label>" + file_name + "</label><br>");
 					}
 				} else {
@@ -183,12 +203,6 @@
 			}
 		  }
 		  return "";
-		}
-		$.urlParam = function (name) {
-			var results = new RegExp('[\?&]' + name + '=([^&#]*)')
-							  .exec(window.location.search);
-
-			return (results !== null) ? results[1] || 0 : false;
 		}
 	});
 </script>
