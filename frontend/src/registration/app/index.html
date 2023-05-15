@@ -44,8 +44,8 @@
 		<label>files:</label><br>
 		<div id="radio_group" ></div><br>
 		
-		<input type="radio" name="action" value="delete"><label>delete</label><br>
-		<input type="radio" name="action" value="download"><label>download</label><br>
+		<input type="radio" id="delete_file" name="action" value="delete"><label>delete</label><br>
+		<input type="radio" id="download_file" name="action" value="download"><label>download</label><br>
 		
 		<input type="submit" value="submit" />
     </form>
@@ -116,6 +116,14 @@
 			}).fail(function(jqXhr, statuscode, errorMSG){
 				alert("error: " + errorMSG);
 			});
+		});
+		
+		$("#delete_file").click(function(){
+			$('#file_form').attr('action', app.endpoint+"/api/file/delete");
+		});
+		
+		$("#download_file").click(function(){
+			$('#file_form').attr('action', app.endpoint+"/api/file/download");
 		});
 		
 		function login_update(email, pass, data) {
