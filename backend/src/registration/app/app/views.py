@@ -81,7 +81,7 @@ def delete_view():
         if user.check_user(user_id):
             file_name = request.form["file_name"]
             try:
-                file_path = get_file_path(user_id, file_name)
+                file_path = user_files.get_file_path(user_id, file_name)
                 if os.path.exists(file_path):
                     os.remove(file_path)
                 user_files.delete_file(user_id, file_name)
