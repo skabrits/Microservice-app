@@ -21,7 +21,10 @@ def registr_view():
         password = request.form["password"]
         try:
             user_id = user.register(username, password)
-            response = {"status": 200, "ID": user_id}
+            if user_id is None:
+                response = {"status": 401}
+            else:
+                response = {"status": 200, "ID": user_id}
         except Exception as e:
             app.logger.error("ERROR: %s" % (e,))
             response = {"status": 404}
@@ -65,9 +68,11 @@ def upload_view():
                 folderpath = os.path.join(app.config['UPLOAD_FOLDER'], str(user_id))
                 os.makedirs(folderpath, exist_ok = True)
                 file_path = os.path.join(folderpath, file_name)
-                file.save(file_path)
-                user_files.upload_file(user_id, file_name, file_path)
-                response = {"status": 202}
+                if user_files.upload_file(user_id, file_name, file_path):
+                    file.save(file_path)
+                    response = {"status": 202}
+                else:
+                    response = {"status": 401}
         else:
             response = {"status": 405}
         
@@ -78,6 +83,7 @@ def delete_view():
     response = {"status": 400}
     if request.method == 'POST':
         user_id = request.form["user_id"]
+        app.logger.debug("user id " + str(user_id))
         if user.check_user(user_id):
             file_name = request.form["file_name"]
             try:

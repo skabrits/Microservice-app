@@ -6,7 +6,10 @@ def register(login, password):
     user_id = generate_id(login, password)
     user = { "login": login, "password": password, "_id": user_id }
     users_table = connect_to_mongodb("users")
-    users_table.insert_one(user)
+    if files_table.find_one({"login": login}) is None:
+        users_table.insert_one(user)
+    else:
+        user_id = None
     return user_id
     
 def login(login, password):
