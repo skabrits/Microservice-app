@@ -36,6 +36,11 @@ spec:
               secretKeyRef:
                 key: db_conection_string
                 name: {{ include "registration-backend.fullname" . }}-db-password
+          - name: "FRONT_ENDPOINT"
+            valueFrom:
+              configMapKeyRef:
+                key: front_endpoint
+                name: {{ include "registration-backend.fullname" . }}-configmap
           volumeMounts:
           - mountPath: "/app/files"
             name: file-storage

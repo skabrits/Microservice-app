@@ -80,13 +80,13 @@
 		$('#file_form').attr('action', app.endpoint+"/api/file/delete");
 		
 		user_id = getCookie("user_id");
-		$(".form_user_id").val(data.ID);
-		$("#table_id").text(data.ID);
+		$(".form_user_id").val(user_id);
+		$("#table_id").text(user_id);
 		
 		var status = $.urlParam("status");
 		
 		if(status){
-			alert("status: " + data.status);
+			alert("status: " + status);
 		}
 		
 		$("#registration").click(function(){
