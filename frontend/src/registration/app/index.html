@@ -87,6 +87,10 @@
 		$(".form_user_id").val(user_id);
 		$("#table_id").text(user_id);
 		
+		if(user_id != ""){
+			list_files({"ID": user_id});
+		}
+		
 		$.urlParam = function (name) {
 			var results = new RegExp('[\?&]' + name + '=([^&#]*)')
 							  .exec(window.location.search);
@@ -140,10 +144,10 @@
 		});
 		
 		$("#logout").click(function(){
-			$("#table_email").text(email);
-			$("#table_pass").text(pass);
-			$("#table_id").text(data.ID);
-			$(".form_user_id").val(data.ID);
+			$("#table_email").text("-");
+			$("#table_pass").text("-");
+			$("#table_id").text("-");
+			$(".form_user_id").val("");
 			
 			setCookie("user_id", "", 1);
 		});
