@@ -39,10 +39,10 @@
 	<p>Files:</p>
 	
 	<form id="file_form" enctype="multipart/form-data" method="POST">
-		<input type="text" class="form_user_id" name="user_id" />
+		<input type="hidden" class="form_user_id" name="user_id" />
 		
-		<label>files:</label><br><br>
-		<div id="radio_group" ></div><br><br>
+		<label>files:</label><br>
+		<div id="radio_group" ></div><br>
 		
 		<input type="radio" name="action" value="delete"><label>delete</label><br>
 		<input type="radio" name="action" value="download"><label>download</label><br>
@@ -133,7 +133,7 @@
 				if (data.status == 200){
 					for(var i=0; i<data.files.length; i++){
 						var file_name = data.files[i];
-						$("#radio_group").append("<input type=\"radio\" name=\"file_name\" value=\"" + file_name + "\"><label>" + file_name + "</label><br><br>");
+						$("#radio_group").append("<input type=\"radio\" name=\"file_name\" value=\"" + file_name + "\"><label>" + file_name + "</label><br>");
 					}
 				} else {
 					alert("status: " + data.status);

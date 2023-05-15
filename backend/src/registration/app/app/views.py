@@ -55,6 +55,7 @@ def login_view():
 def upload_view():
     response = {"status": 400}
     if request.method == 'POST':
+        app.logger.info("upload attempt")
         user_id = request.form["user_id"]
         if user.check_user(user_id):
             if 'file' not in request.files:
@@ -82,12 +83,12 @@ def upload_view():
 def delete_view():
     response = {"status": 400}
     if request.method == 'POST':
+        app.logger.info("delete attempt")
         user_id = request.form["user_id"]
-        app.logger.debug("user id " + str(user_id))
         if user.check_user(user_id):
             file_name = request.form["file_name"]
             try:
-                file_path = user_files.get_file_path(user_id, file_name)
+                file_path = user_files.get_filepath(user_id, file_name)
                 if os.path.exists(file_path):
                     os.remove(file_path)
                 user_files.delete_file(user_id, file_name)
@@ -104,6 +105,7 @@ def delete_view():
 def list_view():
     response = {"status": 400}
     if request.method == 'POST':
+        app.logger.info("list attempt")
         user_id = request.form["user_id"]
         if user.check_user(user_id):
             user_files_list = user_files.list_files(user_id)
