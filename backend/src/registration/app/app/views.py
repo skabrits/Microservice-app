@@ -3,6 +3,7 @@ from flask import request
 from registrationLogic import user, user_files
 from app import app
 from werkzeug.utils import secure_filename
+from flask import send_from_directory
 import random
 import json
 import os
@@ -110,6 +111,27 @@ def list_view():
         if user.check_user(user_id):
             user_files_list = user_files.list_files(user_id)
             response = {"status": 200, "files": user_files_list}
+        else:
+            response = {"status": 405}
+        
+    return json.dumps(response)
+    
+@app.route("/api/file/download", methods=['GET','POST'])
+def download_view():
+    response = {"status": 400}
+    if request.method == 'POST':
+        app.logger.info("download attempt")
+        user_id = request.form["user_id"]
+        if user.check_user(user_id):
+            file_name = request.form["file_name"]
+            try:
+                file_path = user_files.get_filepath(user_id, file_name)
+                if not os.path.exists(file_path):
+                    return response = {"status": 404}
+                return send_from_directory(directory=os.path.dirname(file_name), filename=file_name)
+            except Exception as e:
+                app.logger.error("ERROR: %s" % (e,))
+                response = {"status": 404}
         else:
             response = {"status": 405}
         
