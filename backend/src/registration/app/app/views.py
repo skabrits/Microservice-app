@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request
+from flask import request, redirect
 from registrationLogic import user, user_files
 from app import app
 from werkzeug.utils import secure_filename
@@ -7,6 +7,8 @@ from flask import send_from_directory
 import random
 import json
 import os
+
+front_endpoint = os.getenv('FRONT_ENDPOINT')
 
 @app.route("/")
 def index():
@@ -78,7 +80,7 @@ def upload_view():
         else:
             status = 405
         
-    return redirect(request.url+"?status=%s" % (status,))
+    return redirect(front_endpoint+"?status=%s" % (status,))
     
 @app.route("/api/file/delete", methods=['GET','POST'])
 def delete_view():
@@ -100,7 +102,7 @@ def delete_view():
         else:
             status = 405
         
-    return redirect(request.url+"?status=%s" % (status,))
+    return redirect(front_endpoint+"?status=%s" % (status,))
     
 @app.route("/api/file/list", methods=['GET','POST'])
 def list_view():
